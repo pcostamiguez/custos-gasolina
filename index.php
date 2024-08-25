@@ -25,7 +25,7 @@ if($_POST)
 
     $message = $locomocao->getTextoTotalFormatado();
 }
-else
+else if($error)
 {
     $error = "Ops, Algum problema ocorreu!";
 }
@@ -63,7 +63,7 @@ else
 </head>
 <body>
 <h1>Calculadora de gasto com gasolina</h1>
-<div class="message <?= $error ? 'error' : '' ?>">
+<div class="<?= $message ? 'message' : '' ?> <?= $error ? 'error' : '' ?>">
     <?= $message ?: $error ?>
 </div>
 <form method="post">
@@ -86,7 +86,11 @@ else
         </div>
         <div>
             <label for="taxaErro">Taxa de erro:</label>
-            <input type="number" step="any" name="taxaErro" id="taxaErro" placeholder="ex. 1.1 = 10%">
+            <select name="taxaErro" id="taxaErro">
+                <option value="1.05">5%</option>
+                <option value="1.1">10%</option>
+                <option value="1.15">15%</option>
+            </select>
         </div>
         <div>
             <input type="submit" value="Calcular">
