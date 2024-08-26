@@ -9,13 +9,15 @@ $error = null;
 
 if($_POST)
 {
-    $distanciaCasaTrabalhoKm = (float) $_POST['distanciaCasaTrabalhoKm'];
-    $valorLitroGasolina = (float) $_POST['valorLitroGasolina'];
-    $kmPercorridoLitroGasolina = (float) $_POST['kmPercorridoLitroGasolina'];
-    $diasTrabalhados = (float) $_POST['diasTrabalhados'] ?? null;
-    $taxaErro = (float) $_POST['taxaErro'] ?? null;
+    $distanciaCasaTrabalhoKm = (float) filter_input(INPUT_POST, 'distanciaCasaTrabalhoKm');
+    $valorLitroGasolina = (float) filter_input(INPUT_POST, 'valorLitroGasolina');
+    $kmPercorridoLitroGasolina = (float) filter_input(INPUT_POST, 'kmPercorridoLitroGasolina');
+    $diasTrabalhados = (float) filter_input(INPUT_POST, 'diasTrabalhados');
+    $taxaErro = (float) filter_input(INPUT_POST, 'taxaErro') ?? null;
 
-    $locomocao = new Locomocao(
+    try
+    {
+        $locomocao = new Locomocao(
         $distanciaCasaTrabalhoKm,
         $valorLitroGasolina,
         $kmPercorridoLitroGasolina,
@@ -24,6 +26,9 @@ if($_POST)
     );
 
     $message = $locomocao->getTextoTotalFormatado();
+    } catch (Exception $ex) {
+        die($ex->getMessage());
+    }
 }
 else if($error)
 {
